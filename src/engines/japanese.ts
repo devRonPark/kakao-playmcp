@@ -9,7 +9,7 @@ function getClient(): Anthropic {
   return _client;
 }
 
-const MODEL = 'claude-haiku-4-5';
+const MODEL = 'claude-haiku-4-5-20251001';
 
 const FEW_SHOT = `
 예시 (PRD 9.2절 Hepburn 기준):
