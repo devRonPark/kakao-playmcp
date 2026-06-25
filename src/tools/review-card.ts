@@ -18,6 +18,8 @@ export function registerReviewCardTool(server: McpServer): void {
               `카드 ID: ${card.card_id}`,
               `표현: ${card.expression} (${card.romanization}) — ${card.korean_meaning}`,
               `나중에 generate_daily_quiz로 복습할 수 있어요.`,
+              ``,
+              `다음 단계: 저장한 카드로 퀴즈를 풀려면 '오늘 퀴즈 내줘'라고 해보세요`,
             ].join('\n'),
           }],
         };

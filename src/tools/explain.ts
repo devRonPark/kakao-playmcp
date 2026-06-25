@@ -24,6 +24,9 @@ export function registerExplainTool(server: McpServer): void {
           result.example_meaning,
         ];
 
+        lines.push('');
+        lines.push(`다음 단계: 이 표현으로 퀴즈를 내려면 '오늘 퀴즈 내줘'라고 해보세요`);
+
         return { content: [{ type: 'text', text: lines.join('\n') }] };
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);

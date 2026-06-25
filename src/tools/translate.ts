@@ -38,6 +38,9 @@ export function registerTranslateTool(server: McpServer): void {
           }
         }
 
+        lines.push('');
+        lines.push(`다음 단계: 복습 카드를 만들려면 '이 문장 카드로 저장해줘'라고 해보세요`);
+
         return { content: [{ type: 'text', text: lines.join('\n') }] };
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
