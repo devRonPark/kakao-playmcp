@@ -1,0 +1,8 @@
+node_modules/
+dist/
+out/
+store/
+*.js.map
+*.d.ts.map
+.claude/
+.harness-worktrees/
