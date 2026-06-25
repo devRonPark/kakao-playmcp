@@ -1,48 +1,62 @@
 # Plans.md — kakao-playmcp
 
-## 진행 상태
-
-| 상태 | 마커 |
-|------|------|
-| 완료 | cc:완료 |
-| 진행 중 | cc:WIP |
-| 대기 | cc:TODO |
-
----
-
-## Week 1 — MCP 서버 기본 구조
-
-- [ ] cc:TODO 프로젝트 초기화 (package.json, tsconfig, MCP SDK 설치)
-- [ ] cc:TODO MCP 서버 진입점 구현 (`src/index.ts`)
-- [ ] cc:TODO `translate_kakao_message` Tool 구현
-- [ ] cc:TODO 기본 응답 포맷 구현 (3단 구조: 일본어 / 로마자 / 한국어)
-- [ ] cc:TODO 핵심 표현 분해 로직 구현
-
-## Week 2 — 교정 및 말투 변환
-
-- [ ] cc:TODO `correct_japanese_sentence` Tool 구현
-- [ ] cc:TODO `explain_expression` Tool 구현
-- [ ] cc:TODO 말투 변환 로직 (friend/coworker/stranger)
-- [ ] cc:TODO 초급자용 설명 템플릿
-
-## Week 3 — 복습 기능
-
-- [ ] cc:TODO `create_review_card` Tool 구현
-- [ ] cc:TODO 복습 카드 저장소 (`store/cards.json`)
-- [ ] cc:TODO `generate_daily_quiz` Tool 구현
-- [ ] cc:TODO 오답 기록 데이터 모델
-
-## Week 4 — PlayMCP 등록 및 제출
-
-- [ ] cc:TODO PlayMCP 등록
-- [ ] cc:TODO Tool 설명문 정리
-- [ ] cc:TODO 데모 시나리오 검증
-- [ ] cc:TODO 공모전 제출용 소개 문구 확정
-- [ ] cc:TODO 시연 영상 또는 발표 스크립트
+작성일: 2026-06-25
+PRD 기준: docs/my_japanese_learning_coach_mcp_prd.md
 
 ---
 
 ## 완료된 작업
 
-- [x] cc:완료 PRD 작성 (`docs/my_japanese_learning_coach_mcp_prd.md` v0.1)
-- [x] cc:완료 Harness 초기화 (harness.toml, CLAUDE.md, Plans.md)
+| Task | 내용 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 0.1 | PRD 작성 | docs/my_japanese_learning_coach_mcp_prd.md v0.1 존재 | - | cc:완료 |
+| 0.2 | Harness 초기화 | harness doctor 전체 통과, CLAUDE.md·Plans.md 존재 | - | cc:완료 |
+| 0.3 | Plugin 설정 | ponytail·caveman·VFF 설치 확인, agent MEMORY.md 3개 존재 | 0.2 | cc:완료 |
+| 0.4 | BLUEPRINT.md 작성 | BLUEPRINT.md 존재, 7개 섹션 포함 | 0.3 | cc:완료 |
+
+---
+
+## Week 1 — MCP 서버 기본 구조
+
+| Task | 내용 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 1.0 | 개발 환경 설정 [tdd:skip:tooling-only] | package.json·tsconfig.json·eslint·prettier 존재, `npm run lint` 에러 0 | - | cc:TODO |
+| 1.1 | 프로젝트 초기화 | `npm install` 성공, MCP SDK import 가능, `npm run build` 에러 0 | 1.0 | cc:TODO |
+| 1.2 | MCP 서버 진입점 구현 | `src/index.ts` 존재, `node dist/index.js` 실행 시 MCP 서버 기동 로그 출력 | 1.1 | cc:TODO |
+| 1.3 | `translate_kakao_message` Tool 구현 | Tool 등록 확인, 한국어 입력 → 일본어·romanization·한국어뜻 포함 JSON 반환 | 1.2 | cc:TODO |
+| 1.4 | 기본 응답 포맷 구현 | 모든 응답이 3단 구조(일본어 / romanization / 한국어뜻) 준수, PRD 13절 포맷 일치 | 1.3 | cc:TODO |
+| 1.5 | 핵심 표현 분해 로직 구현 | `key_expressions` 배열에 expression·reading·romanization·meaning 4필드 포함 | 1.4 | cc:TODO |
+
+---
+
+## Week 2 — 교정 및 말투 변환
+
+| Task | 내용 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 2.1 | `correct_japanese_sentence` Tool 구현 | 로마자 입력 교정 가능, corrected_japanese·romanization·correction_summary 포함 | 1.5 | cc:TODO |
+| 2.2 | `explain_expression` Tool 구현 | 일본어 표현 입력 시 초급자 기준 설명 반환 | 1.5 | cc:TODO |
+| 2.3 | 말투 변환 로직 구현 | friend/coworker/stranger 3가지 말투로 같은 의미 문장 생성 가능 | 2.1 | cc:TODO |
+| 2.4 | 초급자용 설명 템플릿 | absolute_beginner 모드 시 문법 용어 없이 "이런 느낌이에요" 방식 설명 | 2.2 | cc:TODO |
+
+---
+
+## Week 3 — 복습 기능
+
+| Task | 내용 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 3.1 | 복습 카드 저장소 구현 | `store/cards.json` 생성·읽기·쓰기 가능, ReviewCard 스키마 준수 | 1.5 | cc:TODO |
+| 3.2 | `create_review_card` Tool 구현 | 카드 저장 성공 시 card_id·saved:true 반환, cards.json에 실제 기록 | 3.1 | cc:TODO |
+| 3.3 | `generate_daily_quiz` Tool 구현 | cards.json에 카드 1개 이상 시 quiz_items 배열 반환, 문제·힌트·정답 포함 | 3.2 | cc:TODO |
+| 3.4 | 오답 기록 데이터 모델 구현 | MistakeLog 스키마 존재, correct_japanese_sentence 호출 시 기록 저장 | 3.2 | cc:TODO |
+
+---
+
+## Week 4 — PlayMCP 등록 및 제출
+
+| Task | 내용 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 4.1 | Tool 설명문 정리 | 모든 Tool의 description이 PlayMCP 등록 요건에 맞게 한국어로 작성 | 3.4 | cc:TODO |
+| 4.2 | 데모 시나리오 검증 | PRD 20절 4개 데모 시나리오 실제 실행 가능, 응답 포맷 준수 확인 | 4.1 | cc:TODO |
+| 4.3 | PlayMCP 등록 | PlayMCP에 MCP 서버 등록 완료, Tool 목록 정상 노출 확인 | 4.2 | cc:TODO |
+| 4.4 | 공모전 제출용 소개 문구 확정 | PRD 27절 문구 기반 최종본 완성, 200자 이내 | 4.3 | cc:TODO |
+| 4.5 | 시연 영상 또는 발표 스크립트 | 데모 3분 이내 시나리오 스크립트 존재 또는 영상 파일 존재 | 4.4 | cc:TODO |
