@@ -125,6 +125,7 @@ export const QuizInputSchema = z.object({
   quiz_count: z.number().int().min(1).max(10).optional().default(3),
   level: LearnerLevelEnum.optional().default('absolute_beginner'),
   focus: z.enum(['meaning', 'pronunciation', 'expression', 'grammar', 'mixed']).optional().default('mixed'),
+  reveal_answers: z.boolean().optional().default(false),
 });
 
 export type QuizInput = z.infer<typeof QuizInputSchema>;

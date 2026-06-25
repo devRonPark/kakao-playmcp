@@ -11,11 +11,17 @@ function shuffle<T>(arr: T[]): T[] {
   return arr;
 }
 
-function buildQuizItem(card: { expression: string; romanization: string; korean_meaning: string; reading: string }, focus: string): QuizItem {
+function buildQuizItem(
+  card: { expression: string; romanization: string; korean_meaning: string; reading: string },
+  focus: string,
+  level: string
+): QuizItem {
+  const isAdvanced = level === 'intermediate';
+
   if (focus === 'grammar') {
     return {
       question: `"${card.expression}"는 어떤 상황에서 쓰나요?`,
-      hint: `뜻: ${card.korean_meaning}`,
+      hint: isAdvanced ? `로마자: ${card.romanization}` : `뜻: ${card.korean_meaning}`,
       answer: `${card.romanization} — ${card.korean_meaning}`,
       explanation: `${card.expression} (${card.romanization}): ${card.korean_meaning}`,
     };
@@ -23,7 +29,7 @@ function buildQuizItem(card: { expression: string; romanization: string; korean_
   if (focus === 'pronunciation') {
     return {
       question: `"${card.expression}"를 로마자로 어떻게 읽나요?`,
-      hint: `히라가나: ${card.reading || '?'}`,
+      hint: isAdvanced ? '' : `히라가나: ${card.reading || '?'}`,
       answer: card.romanization,
       explanation: `${card.expression} = ${card.reading} = ${card.romanization}`,
     };
@@ -31,7 +37,7 @@ function buildQuizItem(card: { expression: string; romanization: string; korean_
   if (focus === 'expression') {
     return {
       question: `"${card.korean_meaning}"를 일본어로?`,
-      hint: `로마자: ${card.romanization}`,
+      hint: isAdvanced ? '' : `로마자: ${card.romanization}`,
       answer: card.expression,
       explanation: `${card.korean_meaning} → ${card.expression} (${card.romanization})`,
     };
@@ -39,7 +45,7 @@ function buildQuizItem(card: { expression: string; romanization: string; korean_
   // meaning (default/mixed)
   return {
     question: `"${card.expression} (${card.romanization})"의 뜻은?`,
-    hint: card.reading ? `읽기: ${card.reading}` : '',
+    hint: isAdvanced ? '' : (card.reading ? `읽기: ${card.reading}` : ''),
     answer: card.korean_meaning,
     explanation: `${card.expression} = ${card.reading} = ${card.romanization} = ${card.korean_meaning}`,
   };
@@ -62,6 +68,8 @@ export function registerQuizTool(server: McpServer): void {
           };
         }
 
+        const level = args.level ?? 'absolute_beginner';
+        const revealAnswers = args.reveal_answers ?? false;
         const count = Math.min(args.quiz_count ?? 3, cards.length);
         const selected = shuffle([...cards]).slice(0, count);
         const focuses = args.focus === 'mixed'
@@ -69,15 +77,15 @@ export function registerQuizTool(server: McpServer): void {
           : [args.focus ?? 'meaning'];
 
         const items: QuizItem[] = selected.map((card, i) =>
-          buildQuizItem(card, focuses[i % focuses.length])
+          buildQuizItem(card, focuses[i % focuses.length], level)
         );
 
         const lines: string[] = [`오늘의 퀴즈 (${items.length}문제)\n`];
         items.forEach((item, i) => {
           lines.push(`Q${i + 1}. ${item.question}`);
           if (item.hint) lines.push(`힌트: ${item.hint}`);
-          lines.push(`정답: ${item.answer}`);
-          lines.push(`설명: ${item.explanation}`);
+          lines.push(`정답: ${revealAnswers ? item.answer : '[정답 숨김 — reveal_answers: true 로 확인]'}`);
+          if (revealAnswers) lines.push(`설명: ${item.explanation}`);
           lines.push('');
         });
 
