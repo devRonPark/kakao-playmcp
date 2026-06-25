@@ -64,6 +64,17 @@ PRD 기준: docs/my_japanese_learning_coach_mcp_prd.md
 
 ---
 
+## Week 6 — suggested_next 기능
+
+| Task | 내용 | DoD | Depends | Status |
+|------|------|-----|---------|--------|
+| 6.1 | types.ts에 suggested_next 필드 추가 [tdd:skip:types-only] [#10] | 5개 Output interface에 `suggested_next: string` 존재, `npm run build` 에러 0 | - | cc:완료 [5ae1fdf] |
+| 6.2 | TDD — suggested_next 사용자 시나리오 실패 테스트 작성 [tdd:required] [#11] | `src/tools/__tests__/` 생성, 5개 Tool 테스트 RED 확인 | 6.1 | cc:완료 [9bb68f9] |
+| 6.3 | 각 Tool 핸들러에 suggested_next 구현 [#12] | 5개 Tool suggested_next 반환, 6.2 테스트 전체 GREEN | 6.2 | cc:완료 [587e340] |
+| 6.4 | 빌드·테스트 전체 통과 확인 및 PR 생성 [tdd:skip:ci-gate] [#13] | `npm run build` + `npm test` 에러 0, PR 머지 | 6.3 | cc:WIP |
+
+---
+
 ## Week 4 — PlayMCP 등록 및 제출
 
 | Task | 내용 | DoD | Depends | Status |
