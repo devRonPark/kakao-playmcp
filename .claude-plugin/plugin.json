@@ -1,0 +1,8 @@
+{
+  "name": "kakao-playmcp",
+  "version": "0.1.0",
+  "description": "My Personal Japanese Learning Coach MCP — Kakao PlayMCP 공모전 출품작",
+  "skills": [
+    "./skills/"
+  ]
+}
