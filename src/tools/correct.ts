@@ -32,6 +32,9 @@ export function registerCorrectTool(server: McpServer): void {
           lines.push(`태그: ${result.mistake_tags.join(', ')}`);
         }
 
+        lines.push('');
+        lines.push(`다음 단계: 교정된 문장을 저장하려면 '카드로 만들어줘'라고 해보세요`);
+
         return { content: [{ type: 'text', text: lines.join('\n') }] };
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);

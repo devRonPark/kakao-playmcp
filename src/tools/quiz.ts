@@ -89,6 +89,8 @@ export function registerQuizTool(server: McpServer): void {
           lines.push('');
         });
 
+        lines.push(`다음 단계: 틀린 표현을 더 알고 싶다면 '~가 무슨 뜻이야?'라고 해보세요`);
+
         return { content: [{ type: 'text', text: lines.join('\n') }] };
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);

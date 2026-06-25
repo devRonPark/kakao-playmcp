@@ -18,18 +18,10 @@ Kakao PlayMCP / AGENTIC PLAYER 10 공모전 출품작.
 ```
 kakao-playmcp/
 ├── src/
-│   ├── index.ts          # MCP 서버 진입점
-│   ├── tools/            # 각 Tool 구현
-│   │   ├── translate.ts
-│   │   ├── correct.ts
-│   │   ├── explain.ts
-│   │   ├── review-card.ts
-│   │   └── quiz.ts
-│   ├── engines/          # 일본어 처리 엔진
-│   │   ├── romanization.ts
-│   │   └── tone.ts
-│   └── store/            # 복습 카드 저장소
-│       └── cards.ts
+│   ├── index.ts
+│   ├── tools/
+│   ├── engines/
+│   └── store/
 ├── docs/
 │   └── my_japanese_learning_coach_mcp_prd.md
 ├── Plans.md
@@ -50,32 +42,14 @@ kakao-playmcp/
 | `analyze_weakness` | P2 | 약점 패턴 분석 |
 | `recommend_next_lesson` | P2 | 다음 학습 추천 |
 
-## 응답 포맷 규칙
-
-모든 일본어 문장 응답은 반드시 3단 구조를 따른다:
-
-```
-일본어 문장
-(Romanized pronunciation — Hepburn 기준)
-한국어 뜻
-```
-
-## 언어 규칙
-
-- **모든 응답은 한국어로 작성한다.** 코드·명령어·고유명사는 그대로 유지.
-
-## 코딩 규칙
-
-- 모든 Tool은 MCP SDK `tool()` 핸들러로 등록
-- 입력 스키마는 PRD의 Input Schema와 일치시킬 것
-- `learner_level` 기본값: `absolute_beginner`
-- `include_romanization` 기본값: `true`
-- 부적절한 표현은 완곡한 대체 표현으로 안내 (자동 전송 미지원)
-- 복습 카드는 `store/cards.json`에 저장
-
 ## 개발 일정
 
 - Week 1: MCP 서버 기본 구조 + `translate_kakao_message`
 - Week 2: `correct_japanese_sentence` + 말투 변환
 - Week 3: `create_review_card` + `generate_daily_quiz`
 - Week 4: PlayMCP 등록 + 데모 + 공모전 제출
+
+## 규칙 참조
+
+@.claude/rules/workflow.md
+@.claude/rules/coding.md

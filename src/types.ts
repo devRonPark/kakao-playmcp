@@ -47,6 +47,7 @@ export interface TranslateOutput {
   tone_note: string;
   key_expressions: KeyExpression[];
   alternative_versions: AlternativeVersion[];
+  suggested_next?: string;
 }
 
 // ─── correct_japanese_sentence ──────────────────────────────────────────────
@@ -67,6 +68,7 @@ export interface CorrectOutput {
   correction_summary: string;
   beginner_explanation: string;
   mistake_tags: string[];
+  suggested_next?: string;
 }
 
 // ─── create_review_card ─────────────────────────────────────────────────────
@@ -95,6 +97,7 @@ export interface ReviewCard {
   created_at: string;
   review_count: number;
   mistake_count: number;
+  suggested_next?: string;
 }
 
 // ─── explain_expression ─────────────────────────────────────────────────────
@@ -117,6 +120,7 @@ export interface ExplainOutput {
   example_sentence: string;
   example_romanization: string;
   example_meaning: string;
+  suggested_next?: string;
 }
 
 // ─── generate_daily_quiz ────────────────────────────────────────────────────
@@ -135,6 +139,11 @@ export interface QuizItem {
   hint: string;
   answer: string;
   explanation: string;
+}
+
+export interface QuizOutput {
+  quiz_items: QuizItem[];
+  suggested_next?: string;
 }
 
 // ─── MistakeLog ─────────────────────────────────────────────────────────────
